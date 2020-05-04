@@ -1,0 +1,30 @@
+{
+  "id": "1747315",
+  "name": "健康码",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "908504",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "5152778",
+      "name": "电话",
+      "font_class": "dianhua",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "11776584",
+      "name": "选择",
+      "font_class": "xuanze",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    }
+  ]
+}

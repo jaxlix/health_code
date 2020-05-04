@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>通行凭证</title>
+    <link rel="stylesheet" href="./font/iconfont.css">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            background-color: rgb(68,146,246);
+        }
+        .header{
+            display: flex;
+            color: #fff;
+            height: 40px;
+        }
+        .header .icon-fanhui{
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            line-height: 40px;
+        }
+        .icon{
+            width: 40px;
+            height: 40px;
+        }
+        .back{
+            display: inline-block;
+            width: 12px;
+            height: 18px;
+            margin-left: 10px;
+            margin-top: 11px;
+            background: url(./back.png) center center no-repeat;
+            background-size: 100% 100%;
+        }
+        .title{
+            flex: 1;
+            line-height: 40px;
+        }
+        .content{
+            width: 85%;
+            margin: 0 auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .top{
+            height: 100px;
+            background-color: rgb(242,247,241);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .top .icon-box{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .top .icon-box .icon-xuanze{
+            color: #77B66F;
+            font-size: 30px;
+        }
+        .top .title{
+            font-size: 22px;
+            text-align: center;
+            color: #78B570;
+        }
+        .msg{
+            padding: 20px;
+        }
+        .msg #name{
+            padding-bottom: 10px;
+            font-size: 18px;
+        }
+        .msg .box{
+            padding-bottom: 6px;
+            font-size: 18px;
+        }
+        .msg .times{
+            color: #C5C5C5;
+            font-size: 14px;
+        }
+        .code{
+            position: relative;
+            display: flex;
+            margin-top: 40px;
+            border-top: 1px dashed #ADADAD;
+        }
+        .code .circle-left{
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgb(68,146,246);
+            border-radius: 50%;
+        }
+        .code .circle-right{
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgb(68,146,246);
+            border-radius: 50%;
+        }
+        .code-box{
+            flex: 1;
+        }
+        .code .name{
+            padding-top: 30px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+        }
+        .code #ewm{
+            position: relative;
+            margin: 20px;
+            width: 80px;
+        }
+        .code #ewm .icon-e{
+            position: absolute;
+            left: 27.5px;
+            top: 25px;
+            width: 25px;
+            height: 30px;
+            background: url(./icon.png) center center no-repeat;
+            background-size: 100% 100%;
+        }
+        .code .v-code{
+            padding-left: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+        .code .v-code .num{
+            margin-left: 2px;
+            padding: 2px 4px;
+            background-color: #ECECEC;
+            color: #444;
+            border-radius: 2px;
+        }
+
+        .footer{
+            margin-top: 40px;
+            text-align: center;
+        }
+        .footer .icon{
+            color: #264675;
+            font-size: 20px;
+        }
+        .footer .call{
+            color: #BBBDC4;
+            font-size: 18px;
+        }
+        .footer .ms{
+            color: #829FC9;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <span class="icon iconfont icon-fanhui"></span>
+        <span class="title">通行凭证</span>
+        <span class="icon"></span>
+    </header>
+    <div class="content">
+        <div class="top">
+            <div class="icon-box">
+                <span class="icon iconfont icon-xuanze"></span>
+            </div>
+            <p class="title">正常通行</p>
+        </div>
+        <div class="msg">
+            <div id="name"></div>
+            <div class="box">
+                <span id="address"></span>（<span id="status"></span>）
+            </div>
+            <div class="times">登记时间:<span id="date"></span></div>
+        </div>
+        <div class="code">
+            <div class="code-box">
+                <div class="name">
+                    <span id="name2"></span> 的 健康码
+                </div>
+                <div class="v-code">
+                    <span>验证码</span>
+                    <span class="num">5299 6864</span>
+                </div>
+            </div>
+            <div id="ewm"><i class="icon-e"></i></div>
+            <i class="circle-left"></i>
+            <i class="circle-right"></i>
+        </div>
+    </div>
+    <div class="footer">
+        <div>
+            <span class="icon iconfont icon-dianhua"></span>
+            <span class="call">服务热线：12345</span>
+        </div>
+        <div class="ms">
+            —— 本服务由湖北省新冠肺炎防控指挥部提供 ——
+        </div>
+    </div>
+
+    <script src="./qrcode.min.js"></script>
+    <script>
+        window.onload = function(){
+            init()
+        }
+        function init() {
+            // 获取url上的参数
+            var name = decodeURI(apis.getQueryVariable("name") || '')
+            if(name.length == 2){
+                name = "*"+name[1]
+            }else{
+                name = name.replace(name[1], "*")
+            }
+            var address = decodeURI(apis.getQueryVariable("address") || '')
+            var status = decodeURI(apis.getQueryVariable("status") || '')
+            var qrcode = new QRCode("ewm", {
+                text: "姓名："+name+"，地址："+address+"（"+status+"）"+"，状态：正常通行",
+                width: 80,
+                height: 80,
+                colorDark: "#70BC67",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H,
+            });
+            document.getElementById("name").innerHTML = name
+            document.getElementById("name2").innerHTML = name
+            document.getElementById("address").innerHTML = address
+            document.getElementById("status").innerHTML = status
+            document.getElementById("date").innerHTML = apis.dateFormatter(new Date().getTime(), "dateTime")
+        }
+        var apis = {
+            dateFormatter: function(t, type){
+                let time = new Date(parseInt(t))
+                let year = time.getFullYear()
+                let month = time.getMonth() + 1
+                month = month > 9 ? month : '0' + month  //月份是从0开始的
+                let day = time.getDate()
+                day = day > 9 ? day : '0' + day
+                let hour = time.getHours()
+                hour = hour > 9 ? hour : '0' + hour
+                let minute = time.getMinutes()
+                minute = minute > 9 ? minute : '0' + minute
+                let second = time.getSeconds()
+                second = second > 9 ? second : '0' + second
+                let week = time.getDay()
+                let weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+                week = weeks[week];
+                switch (type) {
+                    case "dateTime":
+                        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+                        break;
+                    case "date":
+                        return year + '-' + month + '-' + day
+                        break;
+                    case "time":
+                        return hour + ':' + minute + ':' + second
+                        break;
+                    case "week":
+                        return week
+                        break;
+                    case "dateTimeWeek":
+                        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second + " " + week
+                        break;
+                    default:
+                        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+                        break;
+                }
+            },
+            getQueryVariable: function(variable){
+                var query = window.location.href.substring(window.location.href.indexOf("?")+1)
+                var vars = query.split("&");
+                for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split("=");
+                    if(pair[0] == variable){
+                        return pair[1];
+                    }
+                }
+                return(false);
+            }
+        }
+    </script>
+</body>
+
+</html>
